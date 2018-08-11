@@ -111,22 +111,38 @@ function isValidCVV(cvv){
     }
 }
 function isExpirationDateValid(date){
-    var regex = /^\d{2}\/\d{2}$/
+    var regex = /^0*\d\d\/\d\d$/ /* /^\d{2}\/\d{2}$/ */
     var result = date.match(regex)
     var length=0;
     (isNull(result)? length=0:length=result.length )
-    if(length===1){
+    
+    if(length===1 && isInRange(date)){
+        
         var expDate = new Date("20" + date.substring(3), date.substring(0,2));
         var todaysDate = new Date();
-        if(expDate.getFullYear()<todaysDate.getFullYear()){
-            if(expDate.getFullMonth()>todaysDate.getFullMonth()){
-            return false
+        console.log("exp date: " + expDate)
+        if(expDate.getFullYear()>todaysDate.getFullYear()){
+          return true
+        }else if(expDate.getFullYear()==todaysDate.getFullYear()){
+            if(expDate.getMonth()>=todaysDate.getMonth()){
+                return true
             }
+            return false
         }
-        return true // valid 3 digit
+     
     }else{
         return false
     }
+}
+function isInRange(data){
+    //check to see if my MM is within 1-12 and YY is within 0-99
+    var month = parseInt(data.substring(0,2))
+    var year = parseInt(data.substring(3))
+   // console.log("range: " + month + " Year: "+ year)
+    var validMonthRange = (month>=1&& month<=12? true:false)
+    var validYearRange =  (year>=0&& year<=99? true:false)
+   // console.log("month: " + validMonthRange + " Year: "+ validYearRange)
+    return (validMonthRange && validYearRange)
 }
 function isNull(data){
     return(data===null);
