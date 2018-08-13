@@ -60,6 +60,8 @@ pname.addEventListener("blur",function(e){
         if(validateCar(event.target.value, car_make.value, car_model.value)){
             console.log("validating car year")
             validateField(".input-group")
+            validateField(".input-group")
+            
         }else{
            invalidateField(".input-group")
            invalidFieldMessage("#"+event.target.id, message["car-year"])
@@ -71,7 +73,9 @@ pname.addEventListener("blur",function(e){
 
         if(validateCar(car_year.value,event.target.value,car_model.value)){
             console.log("validating car make")
+            var delMsg = document.querySelector(".input-group");
             validateField(".input-group")
+            removeInvalidMsg(delMsg)
         }else{
             invalidateField(".input-group")
             invalidFieldMessage("#"+event.target.id, message["car-make"])
@@ -84,6 +88,9 @@ pname.addEventListener("blur",function(e){
         if(validateCar(car_year.value,car_make.value, event.target.value)){
             console.log("validating car model")
             validateField(".input-group")
+            var delMsg = document.querySelector(".input-group");
+            validateField(".input-group")
+            removeInvalidMsg(delMsg)
         }else{
             invalidateField(".input-group")
             invalidFieldMessage("#"+event.target.id, message["car-model"])
@@ -154,8 +161,38 @@ pname.addEventListener("blur",function(e){
 
     })
 }
-
 function validateAllInputs(){
+    var allInputFields = document.getElementsByTagName("input")
+    //Get all the valid/invalid inputs
+    var input_fields = {
+        "name":isNameValid(pname.value)?"valid":"invalid",
+        "car-year": validateCar(car_year.value, car_make.value,car_model.value)?"valid":"invalid",
+        "car-make": validateCar(car_make.value, car_make.value, car_model.value)?"valid":"invalid",
+        "car-model":validateCar(car_model, car_make.value, car_model.value)?"valid":"invalid",
+        "start-date": isYearValid(isYearValid.value)?"valid":"invalid",
+        "days": isNumberOfDaysValid(days.value)?"valid":"invalid",
+        "credit-card":validateCardNumber(credit_card.value)?"valid":"invalid",
+        "cvv":isValidCVV(cvv.value)?"valid":"invalid",
+        "expiration": isExpirationDateValid(expiration.value)?"valid":"invalid"
+    }
+
+    for(var field of allInputFields){
+        console.log("field: " + field.id)
+        if(input_fields[field.id]=="invalid"){
+            if(field.id=="car-year"||field.id=="car-make"||field.id=="car-model"){
+                invalidateField(".input-group")
+                console.log("adding msg" )
+                invalidFieldMessage(".input-group", message[field.id])    
+            }else{
+                invalidateField("#"+field.id)
+                invalidFieldMessage("#"+field.id, message[field.id])
+            }
+            
+        }
+    }
+    
+}
+function validateAllInputs1(){
     var invalidInputs =document.querySelectorAll(".input-invalid")
     var cost;
     if(invalidInputs.length==0){

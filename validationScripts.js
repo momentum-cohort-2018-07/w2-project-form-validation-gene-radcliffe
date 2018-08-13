@@ -11,11 +11,19 @@ function invalidateField(cssSelector){
     }
     element.parentElement.classList.add("input-invalid")
 }
+/**
+ * adds the description to an invalid field
+ * @param {*} cssSelector 
+ * @param {*} msg 
+ */
 function invalidFieldMessage(cssSelector,msg){
+    if(cssSelector=="#car-field"||cssSelector=="#car-make"||cssSelector=="#car-year"){
+        cssSelector=".input-group"
+    }
     var element= document.querySelector(cssSelector)
     var invalid_msg = document.createElement("div");
     invalid_msg.innerText=msg
-    invalid_msg.id=""
+    
     invalid_msg.className="invalid-msg"
     invalid_msg.style="color: red; font-size: 0.5rem; display:block;"
     var input_field = element.parentElement
@@ -34,14 +42,14 @@ function validateField(cssSelector){
     var element = document.querySelector(cssSelector);
     
     var invalid =element.parentElement.classList.contains("input-invalid");
-    
+ 
     if(invalid){
         element.parentElement.classList.remove("input-invalid")
+        removeInvalidMsg(element)
         
-      
     }
         element.parentElement.classList.add("input-valid")
-        removeInvalidMsg(element)
+      
     
     return
 }
