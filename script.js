@@ -163,13 +163,15 @@ pname.addEventListener("blur",function(e){
 }
 function validateAllInputs(){
     var allInputFields = document.getElementsByTagName("input")
+    var cost;
+    var validCount=0;
     //Get all the valid/invalid inputs
     var input_fields = {
         "name":isNameValid(pname.value)?"valid":"invalid",
-        "car-year": validateCar(car_year.value, car_make.value,car_model.value)?"valid":"invalid",
-        "car-make": validateCar(car_make.value, car_make.value, car_model.value)?"valid":"invalid",
-        "car-model":validateCar(car_model, car_make.value, car_model.value)?"valid":"invalid",
-        "start-date": isYearValid(isYearValid.value)?"valid":"invalid",
+        "car-year": isYearValid(car_year.value)?"valid":"invalid",
+        "car-make": isMakeValid(car_make.value)?"valid":"invalid",
+        "car-model":isModelValid(car_model.value)?"valid":"invalid",
+        "start-date":isDateValid(start_date.value)?"valid":"invalid",
         "days": isNumberOfDaysValid(days.value)?"valid":"invalid",
         "credit-card":validateCardNumber(credit_card.value)?"valid":"invalid",
         "cvv":isValidCVV(cvv.value)?"valid":"invalid",
@@ -188,7 +190,12 @@ function validateAllInputs(){
                 invalidFieldMessage("#"+field.id, message[field.id])
             }
             
+        }else if(input_fields[field.id]=="valid"){
+            validCount++
         }
+    }
+    if(validCount==9){
+        displayTotal()
     }
     
 }
