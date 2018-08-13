@@ -1,6 +1,18 @@
 
 var message
-var input_controls=[];
+var invalid_inputs=[];
+
+var messages={
+    "name":"Your Name is required",
+    "car-year":"The Year of your car is required",
+    "car-make":"The Make of your car is required",
+    "car-model": "The Model of your Car is required",
+    "start-date": "The Date is required",
+    "days": "The Number of Days is required",
+    "credit-card":"Please enter your Credit Card Number to proceed with the transaction",
+    "ccv":"Please enter your card's CCV number",
+    "expiration": "Please enter the card's expiration date"
+}
 
 initialize();
 
@@ -91,13 +103,12 @@ function initialize(){
         
     })
     credit_card.addEventListener("blur", function(e){
-        // //validation code for days
-        // if(isBlank(e.target.value)){
-        //     invalidateField(e.target.id)
-        // }else{
-        //     validateField(e.target.id)
-        // }
-        
+        var isCreditCardValid = validateCardNumber(e.target.value)
+        if(isCreditCardValid){
+            validateField("#" + e.target.id)
+        }else{
+            invalidateField("#" + e.target.id)
+        }
     })
 
     cvv.addEventListener("blur", function(e){
@@ -124,20 +135,26 @@ function initialize(){
         event.preventDefault();
        
 
+
     })
 }
 
-function lostFocus(event){
-    var element = document.querySelector("#"+event.target.id)
-    console.log(element.parentElement.classList);
-    
-    if(element.value!="" ){
-        validField(element.id)
-    }else{
-     
-        invalidate(element.id)
-    }
-    console.log("validation Failed")
-    return;
+function validateAllInputs(){
+
+    var valid;
+
+    (isNameValid(name.value)?valid++:invalid_inputs[0]="name")
+    (isYearValid(car_year.value)?valid++:invalid_inputs[1]="car-year")
+    (isMakeValid(car_make.value)?valid++:invalid_inputs[2]="car-make")
+    (isModelValid(car_model.value)?valid++:invalid_inputs[3]="car-model")
+    (isDateValid(start_date.value)?valid++:invalid_inputs[4]="start-date")
+    (isNumberOfDaysValid(days.value)?valid++:invalid_inputs[5]="days")
+    (isCreditCardValid(credit_card.value)?valid++:invalid_inputs[6]="credit-card")
+    (isValidCVV(cvv.value)?valid++:invalid_inputs[7]="ccv")
+    (isExpirationDateValid(expiration.value)?valid++:invalid_inputs[8]="expiration")
+
+    if(valid==9){
+
+    }else{}
 }
 

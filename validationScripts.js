@@ -1,5 +1,9 @@
-function invalidateField(elementID){
-    var element = document.querySelector(elementID)
+/**
+ * Invalidates the field
+ * @param {CSS Selector (e.g. #input-field or .car-field)} cssSelector 
+ */
+function invalidateField(cssSelector){
+    var element = document.querySelector(cssSelector)
 
     var valid = element.parentElement.classList.contains("input-valid")
     if(valid){
@@ -7,10 +11,14 @@ function invalidateField(elementID){
     }
     element.parentElement.classList.add("input-invalid")
 }
+/**
+ * Validates the field 
+ * @param {CSS Selector (e.g. #input-field or .car-field)} cssSelector
+  
+ */
+function validateField(cssSelector){
 
-function validateField(elementId){
-
-    var element = document.querySelector(elementId);
+    var element = document.querySelector(cssSelector);
     
     var invalid =element.parentElement.classList.contains("input-invalid");
    
@@ -21,15 +29,11 @@ function validateField(elementId){
     
     return
 }
-function isBlank(data){
-    //return true if blank
-   
-    if(String(data).length > 0){
-    
-        return false // not blank
-    }
-    return true // blank
-}
+
+/**
+ * Validates the Customer's Name
+ * @param {String. Name of Customer} name 
+ */
 function isNameValid(name){
  
     if(!isBlank(name)){
@@ -41,6 +45,13 @@ function isNameValid(name){
    
     
 }
+/**
+ * Validates Car Year, Make and Model all together.
+ * @param {Model Year of Car in YYYY format} year 
+ * @param {Make of Car} make 
+ * @param {Model of Car} model
+ *  
+ */
 function validateCar(year, make, model){
     //isCarValid && isMakeValid && isModelValid
     // console.log("the Year is Valid? " +isYearValid(year));
@@ -56,13 +67,20 @@ function validateCar(year, make, model){
     }
 }
 
-
+/**
+ * 
+ * @param {String. Make of the Car} make 
+ */
 function isMakeValid(make){
      //return true if valid
      
     return((typeof(make)=="string") && !isBlank(make));
     
 }
+/**
+ * 
+ * @param {String. Model Year of Car} year 
+ */
 function isYearValid(year){
     //return true if valid
     var today = new Date();
@@ -71,6 +89,10 @@ function isYearValid(year){
    return(typeof(year)=="number" && year >= 1900 && year <= today.getFullYear())
 
 }
+/**
+ * Validates the Car Model
+ * @param {Car Model} model 
+ */
 function isModelValid(model){
    
     return((typeof(model)=="string") && !isBlank(model));
@@ -78,7 +100,8 @@ function isModelValid(model){
     
 }
 /**
- * is Date Valid
+ * Validates the parking date
+ * @param {date of parking} date 
  */
 function isDateValid(date){
     if(!isBlank(date)){
@@ -86,6 +109,10 @@ function isDateValid(date){
     }
     return false
 }
+/**
+ * Validates the number of days to park
+ * @param {0-30} days 
+ */
 function isNumberOfDaysValid(days){
     
     days = parseInt(days)
@@ -96,6 +123,10 @@ function isNumberOfDaysValid(days){
     return(days >= 1 && days<=30 )
 
 }
+/**
+ * Validates CVV number of credit card
+ * @param {3 Digit CVV number to validate} cvv 
+ */
 function isValidCVV(cvv){
     var regex = /^\d{3}$/; //match to 3 digits
     
@@ -110,6 +141,10 @@ function isValidCVV(cvv){
         return false
     }
 }
+/**
+ * 
+ * @param {in MM/YY format} date 
+ */
 function isExpirationDateValid(date){
     var regex = /^0*\d\d\/\d\d$/ /* /^\d{2}\/\d{2}$/ */
     var result = date.match(regex)
@@ -134,6 +169,39 @@ function isExpirationDateValid(date){
         return false
     }
 }
+/**
+ * Validates credit card
+ * @param {16 digit credit card number} number 
+ */
+function validateCardNumber(number) {
+    var regex = new RegExp("^[0-9]{16}$");
+       if (!regex.test(number))
+        return false;
+
+    return luhnCheck(number);
+}
+/**
+ * 
+ * @param {Validates if Credit Card number is valid} val 
+ */
+function luhnCheck(val) {
+    var sum = 0;
+    for (var i = 0; i < val.length; i++) {
+        var intVal = parseInt(val.substr(i, 1));
+        if (i % 2 == 0) {
+            intVal *= 2;
+            if (intVal > 9) {
+                intVal = 1 + (intVal % 10);
+            }
+        }
+        sum += intVal;
+    }
+    return (sum % 10) == 0;
+}
+/**
+ * Checks if MM is within 0-12 and YY is within 0-99
+ * @param {MM/YY} data 
+ */
 function isInRange(data){
     //check to see if my MM is within 1-12 and YY is within 0-99
     var month = parseInt(data.substring(0,2))
@@ -144,6 +212,23 @@ function isInRange(data){
    // console.log("month: " + validMonthRange + " Year: "+ validYearRange)
     return (validMonthRange && validYearRange)
 }
+function submit(){
+
+}
+
+function lastVerify(){
+
+
+}
 function isNull(data){
     return(data===null);
+}
+function isBlank(data){
+    //return true if blank
+   
+    if(String(data).length > 0){
+    
+        return false // not blank
+    }
+    return true // blank
 }

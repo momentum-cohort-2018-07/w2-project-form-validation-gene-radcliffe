@@ -35,26 +35,9 @@ function initialize(){
     })
 }
 
-function lostFocus(event){
-    var element = document.querySelector("#"+event.target.id)
-    console.log(element.parentElement.classList);
-    
-    if(element.value!="" ){
-        validField(element.id)
-    }else{
-     
-        invalidate(element.id)
-    }
-    console.log("validation Failed")
-    return;
-}
 
-function checkBlank(data){
-    if(data!=""){
-        return true 
-    }
-    return false
-}
+
+
 
 
 function clearAllAlerts(){
