@@ -88,3 +88,14 @@ function validate(){
     }
 
 }
+
+var name = document.querySelector("#name");
+var car_year = document.querySelector("#car-year")
+var car_make = document.querySelector("#car-make") 
+var car_model = document.querySelector("#car-model")
+var start_date = document.querySelector("#start-date")
+var days = document.querySelector("#days")
+var credit_card = document.querySelector("#credit-card")
+var cvv = document.querySelector("#cvv")
+var expiration = document.querySelector("#expiration")
+var submit = document.querySelector("#submit-button")
