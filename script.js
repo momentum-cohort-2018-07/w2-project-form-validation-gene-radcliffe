@@ -1,4 +1,4 @@
-var invalid_inputs=[];
+
 var pname 
 var car_year  
 var car_make   
@@ -10,7 +10,8 @@ var cvv
 var expiration  
 var submit  
 var total_div
-var messages = {
+
+var message = {
     "name":"Your Name is required",
     "car-year":"The Year of your car is required",
     "car-make":"The Make of your car is required",
@@ -18,7 +19,7 @@ var messages = {
     "start-date": "The Date is required",
     "days": "The Number of Days is required",
     "credit-card":"Please enter your Credit Card Number to proceed with the transaction",
-    "ccv":"Please enter your card's CCV number",
+    "cvv":"Please enter your card's CCV number",
     "expiration": "Please enter the card's expiration date"
 }
 
@@ -47,6 +48,7 @@ pname.addEventListener("blur",function(e){
         return
     }else{
         invalidateField("#"+e.target.id)
+        invalidFieldMessage("#"+e.target.id, message["name"])
     }
 
 })
@@ -60,6 +62,7 @@ pname.addEventListener("blur",function(e){
             validateField(".input-group")
         }else{
            invalidateField(".input-group")
+           invalidFieldMessage("#"+event.target.id, message["car-year"])
         }
 
             
@@ -71,6 +74,7 @@ pname.addEventListener("blur",function(e){
             validateField(".input-group")
         }else{
             invalidateField(".input-group")
+            invalidFieldMessage("#"+event.target.id, message["car-make"])
         }
         
     })
@@ -82,6 +86,7 @@ pname.addEventListener("blur",function(e){
             validateField(".input-group")
         }else{
             invalidateField(".input-group")
+            invalidFieldMessage("#"+event.target.id, message["car-model"])
         }
 
     })
@@ -93,6 +98,7 @@ pname.addEventListener("blur",function(e){
             validateField("#" + e.target.id)
         }else{
             invalidateField("#" + e.target.id)
+            invalidFieldMessage("#"+e.target.id, message["start-date"])
         }
         
 
@@ -105,6 +111,7 @@ pname.addEventListener("blur",function(e){
             validateField("#" + e.target.id)
         }else{
             invalidateField("#" + e.target.id)
+            invalidFieldMessage("#"+e.target.id, message["days"])
         }
         
     })
@@ -114,6 +121,7 @@ pname.addEventListener("blur",function(e){
             validateField("#" + e.target.id)
         }else{
             invalidateField("#" + e.target.id)
+            invalidFieldMessage("#"+e.target.id, message["credit-card"])
         }
     })
 
@@ -124,6 +132,7 @@ pname.addEventListener("blur",function(e){
             validateField("#"+ e.target.id)
         }else{
             invalidateField("#"+e.target.id)
+            invalidFieldMessage("#"+e.target.id, message["cvv"])
         }
         
 
@@ -134,6 +143,7 @@ pname.addEventListener("blur",function(e){
             validateField("#"+e.target.id)
         }else{
             invalidateField("#"+e.target.id)
+            invalidFieldMessage("#"+e.target.id, message["expiration"])
         }
         
     })
@@ -146,24 +156,16 @@ pname.addEventListener("blur",function(e){
 }
 
 function validateAllInputs(){
+    var invalidInputs =document.querySelectorAll(".input-invalid")
+    var cost;
+    if(invalidInputs.length==0){
+        displayTotal();
 
-    var valid =0;
-
-    ((isNameValid(name.value))?valid++:invalid_inputs[0]="name")
-    ((isYearValid(car_year.value))?valid++:invalid_inputs[1]="car-year")
-    // (isMakeValid(car_make.value))?valid++:invalid_inputs[2]="car-make"
-    // (isModelValid(car_model.value))?valid++:invalid_inputs[3]="car-model"
-    // (isDateValid(start_date.value))?valid++:invalid_inputs[4]="start-date"
-    // (isNumberOfDaysValid(days.value))?valid++:invalid_inputs[5]="days"
-    // (isCreditCardValid(credit_card.value))?valid++:invalid_inputs[6]="credit-card"
-    // (isValidCVV(cvv.value))?valid++:invalid_inputs[7]="ccv"
-    // (isExpirationDateValid(expiration.value))?valid++:invalid_inputs[8]="expiration"
-    // console.log("valid: "+ valid)
-    console.log(invalid_inputs)
-    if(valid ==9){
-        displayTotal()
+    }else{
+        Window.alert("Please fill out missing entries")
     }
     
+
 }   
 
 
@@ -188,6 +190,6 @@ for(var d=0; d<days.value;d++){
     return cost
 }
 function displayTotal(){
-    total_div.innerText = getCost();
-
+    total_div.innerText ="Total is: " + getCost();
+    total_div.style="border: 1px solid black; color: red; font-size: 22px"
 }
